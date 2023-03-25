@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form id="user-form">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required><br>
+
+  <label for="phone">Phone:</label>
+  <input type="tel" id="phone" name="phone" required><br>
+
+  <button type="submit">Submit</button>
+</form>
+<script>
+  $(document).ready(function() {
+$('#user-form').submit(function(event) {
+  event.preventDefault();
+
+  const name = $('#name').val();
+  const email = $('#email').val();
+  const phone = $('#phone').val();
+
+  $.get(`https://test-api-v3.myways.ai/user?email=${email}`, function(data) {
+    if (data.exists) {
+      alert('User Found');
+    } else {
+      $.post('https://test-api-v3.myways.ai/user', { name, email, phone }, function(data) {
+        alert('User Created Successfully');
+      });
+    }
+  });
+});
+});
+
+</script>
+</body>
+</html>
